@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Workout Plan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <style>
+        body {
+            background: linear-gradient(135deg, #833AB4, #FD1D1D, #FCB045);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            color: white;
+            padding: 20px;
+            width: 400px;
+        }
+        .form-control {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            border-radius: 10px;
+        }
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #FD1D1D, #FCB045);
+            border: none;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #FCB045, #FD1D1D);
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h3 class="text-center">Create Workout Plan</h3>
+    <form th:action="@{/admin/createWorkoutPlan}" th:object="${workoutPlan}" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" th:field="*{name}" id="name" class="form-control" placeholder="Enter plan name" required/>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea th:field="*{description}" id="description" class="form-control" rows="4" placeholder="Enter plan description" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Create Workout Plan</button>
+        <a th:href="@{/admin/workoutplans}" class="btn btn-secondary w-100 mt-2">Back to Workout Plans</a>
+    </form>
+</div>
+</body>
+</html>

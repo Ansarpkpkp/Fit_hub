@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Diet Plan Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #000000, #0a001a, #1a0033, #2a004d);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        .container {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+        .card {
+            background-color: rgba(26, 0, 51, 0.8);
+            border: 1px solid #7c4dff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(123, 31, 162, 0.3);
+        }
+        .card-header {
+            background-color: #1a0033;
+            border-bottom: 1px solid #7c4dff;
+            padding: 1.5rem;
+        }
+        .card-header h2 {
+            color: #b388ff;
+            margin: 0;
+            text-shadow: 0 0 8px rgba(179, 136, 255, 0.3);
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .form-control {
+            background-color: rgba(26, 0, 51, 0.7);
+            border: 1px solid #7c4dff;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            background-color: rgba(26, 0, 51, 0.9);
+            border-color: #b388ff;
+            color: #ffffff;
+            box-shadow: 0 0 0 0.2rem rgba(123, 31, 162, 0.25);
+        }
+        .is-invalid {
+            border-color: #ff1744;
+        }
+        .invalid-feedback {
+            color: #ff6666;
+        }
+        label {
+            color: #b388ff;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .btn-primary {
+            background-color: #7c4dff;
+            border-color: #7c4dff;
+            padding: 0.5rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #651fff;
+            border-color: #651fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(123, 31, 162, 0.3);
+        }
+        .btn-secondary {
+            background-color: #333333;
+            border-color: #333333;
+            padding: 0.5rem 1.5rem;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #1a1a1a;
+            border-color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 th:text="${dietPlan.id == null ? 'Create Diet Plan' : 'Edit Diet Plan'}"></h2>
+                </div>
+                <div class="card-body">
+                    <form th:action="${dietPlan.id == null ? '/admin/dietplan/create' : '/admin/dietplan/edit/' + dietPlan.id}" th:object="${dietPlan}" method="post">
+                        <input type="hidden" th:field="*{id}" />
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" th:field="*{name}" id="name" class="form-control"
+                                   th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}">
+                            <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback" th:errors="*{name}"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <textarea th:field="*{description}" id="description" class="form-control" rows="4"
+                                      th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"></textarea>
+                            <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback" th:errors="*{description}"></div>
+                        </div>
+                        <div class="form-group text-right">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <a th:href="@{/admin/dietplans}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

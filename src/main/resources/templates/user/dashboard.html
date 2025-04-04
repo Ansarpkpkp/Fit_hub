@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #000000, #1a0000, #330000, #4d0000);
+      color: #ffffff;
+      min-height: 100vh;
+    }
+    .container {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    .card {
+      background-color: rgba(0, 0, 0, 0.7);
+      border: 1px solid #ff0000;
+      color: #ffffff;
+    }
+    .card-header {
+      background-color: #1a0000;
+      border-bottom: 1px solid #ff0000;
+      font-weight: bold;
+    }
+    .table {
+      color: #ffffff;
+    }
+    .table thead th {
+      background-color: #1a0000;
+      border-color: #ff0000;
+    }
+    .table tbody tr {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .table tbody tr:hover {
+      background-color: rgba(51, 0, 0, 0.7);
+    }
+    .btn-primary {
+      background-color: #8b0000;
+      border-color: #8b0000;
+    }
+    .btn-primary:hover {
+      background-color: #6b0000;
+      border-color: #6b0000;
+    }
+    .btn-success {
+      background-color: #006400;
+      border-color: #006400;
+    }
+    .btn-danger {
+      background-color: #8b0000;
+      border-color: #8b0000;
+    }
+    .form-control {
+      background-color: rgba(0, 0, 0, 0.5);
+      border: 1px solid #ff0000;
+      color: #ffffff;
+    }
+    .form-control:focus {
+      background-color: rgba(0, 0, 0, 0.7);
+      border-color: #ff0000;
+      color: #ffffff;
+      box-shadow: 0 0 0 0.2rem rgba(139, 0, 0, 0.25);
+    }
+    h2, h3, h5 {
+      color: #ff3333;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6">
+      <h2 th:text="'Welcome, ' + ${user.firstName} + ' ' + ${user.lastName} + '!'"></h2>
+      <p>Email: <span th:text="${user.email}"></span></p>
+      <p>Height: <span th:text="${user.height}"></span> cm</p>
+
+      <!-- Weight Input Form -->
+      <h3>Enter Weekly Weight</h3>
+      <form th:action="@{/user/weightlog/add}" method="post" class="mb-3">
+        <div class="form-group">
+          <label for="weight">Weight (kg):</label>
+          <input type="number" step="0.1" id="weight" name="weight" class="form-control" required/>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Weight</button>
+      </form>
+
+      <h3>Weight Logs</h3>
+      <!-- Display existing weight logs -->
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Date</th>
+          <th>Weight (kg)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="log : ${weightLogs}">
+          <td th:text="${log.logDate}"></td>
+          <td th:text="${log.weight}"></td>
+        </tr>
+        </tbody>
+      </table>
+
+      <a th:href="@{/user/profile}" class="btn btn-primary">Edit Profile</a>
+      <a th:href="@{/user/subscription}" class="btn btn-success">Subscription</a>
+      <a th:href="@{/logout}" class="btn btn-danger">Logout</a>
+    </div>
+
+    <!-- Diet and Workout Plan Containers -->
+    <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-header">
+          Workout Plan
+        </div>
+        <div class="card-body">
+          <div th:if="${workoutPlan == null}">
+            <p>No workout plan assigned yet.</p>
+          </div>
+          <div th:if="${workoutPlan != null}">
+            <h5 th:text="${workoutPlan.name}"></h5>
+            <p th:text="${workoutPlan.description}"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          Diet Plan
+        </div>
+        <div class="card-body">
+          <div th:if="${dietPlan == null}">
+            <p>No diet plan assigned yet.</p>
+          </div>
+          <div th:if="${dietPlan != null}">
+            <h5 th:text="${dietPlan.name}"></h5>
+            <p th:text="${dietPlan.description}"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  // Simple logout with confirmation
+  document.querySelector('.btn-danger').addEventListener('click', function(e) {
+    if (!confirm('Are you sure you want to logout?')) {
+      e.preventDefault();
+    }
+  });
+</script>
+</body>
+</html>

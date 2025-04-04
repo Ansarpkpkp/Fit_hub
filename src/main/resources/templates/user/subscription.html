@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Subscription</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h2>Subscription</h2>
+            <div th:if="${param.success}" class="alert alert-success">
+                Subscription updated successfully!
+            </div>
+            <p>Current Subscription Status: <span th:text="${user.subscriptionStatus ? 'Active' : 'Inactive'}"></span></p>
+
+            <form th:action="@{/user/subscription/update}" method="post">
+                <div class="form-group">
+                    <label for="subscriptionStatus">Update Subscription:</label>
+                    <select id="subscriptionStatus" name="subscriptionStatus" class="form-control">
+                        <option value="true">Activate</option>
+                        <option value="false">Deactivate</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Subscription</button>
+            </form>
+
+            <a th:href="@{/user/dashboard}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

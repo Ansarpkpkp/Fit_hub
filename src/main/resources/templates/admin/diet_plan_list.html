@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Diet Plans</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #000000, #0a001a, #1a0033, #2a004d);
+      color: #ffffff;
+      min-height: 100vh;
+    }
+    .container {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    h2 {
+      color: #b388ff;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 0 10px rgba(179, 136, 255, 0.3);
+    }
+    .alert-success {
+      background-color: #00695c;
+      border-color: #005548;
+      color: white;
+    }
+    .alert-danger {
+      background-color: #8b0000;
+      border-color: #800000;
+      color: white;
+    }
+    .btn-success {
+      background-color: #00c853;
+      border-color: #00c853;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    .btn-success:hover {
+      background-color: #009624;
+      border-color: #009624;
+      transform: translateY(-2px);
+    }
+    .table {
+      color: #ffffff;
+      margin-bottom: 2rem;
+      border-color: #7c4dff;
+    }
+    .table thead th {
+      background-color: #1a0033;
+      border-color: #7c4dff;
+      color: #b388ff;
+      font-weight: 600;
+    }
+    .table tbody tr {
+      background-color: rgba(26, 0, 51, 0.7);
+      border-color: #7c4dff;
+      transition: all 0.2s ease;
+    }
+    .table tbody tr:hover {
+      background-color: rgba(123, 31, 162, 0.4);
+      transform: translateX(5px);
+    }
+    .btn-primary {
+      background-color: #7c4dff;
+      border-color: #7c4dff;
+      transition: all 0.2s ease;
+    }
+    .btn-primary:hover {
+      background-color: #651fff;
+      border-color: #651fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(123, 31, 162, 0.3);
+    }
+    .btn-danger {
+      background-color: #ff1744;
+      border-color: #ff1744;
+      transition: all 0.2s ease;
+    }
+    .btn-danger:hover {
+      background-color: #d50000;
+      border-color: #d50000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(213, 0, 0, 0.3);
+    }
+    .btn-secondary {
+      background-color: #333333;
+      border-color: #333333;
+      transition: all 0.2s ease;
+    }
+    .btn-secondary:hover {
+      background-color: #1a1a1a;
+      border-color: #1a1a1a;
+      transform: translateY(-2px);
+    }
+    .btn-sm {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.875rem;
+      margin-right: 0.5rem;
+      min-width: 70px;
+    }
+    .action-buttons {
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h2>Diet Plans</h2>
+
+      <!-- Display success message -->
+      <div th:if="${param.success}" class="alert alert-success">
+        Action was successful!
+      </div>
+
+      <!-- Display error message (if any) -->
+      <div th:if="${param.error}" class="alert alert-danger">
+        An error occurred. Please try again.
+      </div>
+
+      <a th:href="@{/admin/dietplan/create}" class="btn btn-success">Create New Diet Plan</a>
+
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dietPlan : ${dietPlans}">
+          <td th:text="${dietPlan.name}"></td>
+          <td th:text="${dietPlan.description}"></td>
+          <td class="action-buttons">
+            <form th:action="@{/admin/dietplan/delete/{id}(id=${dietPlan.id})}" method="post" style="display: inline;">
+              <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+            </form>
+            <a th:href="@{/admin/dietplan/edit/{id}(id=${dietPlan.id})}" class="btn btn-sm btn-primary">Edit</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <a th:href="@{/admin/dashboard}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

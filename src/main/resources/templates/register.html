@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #000000, #1a0000, #330000, #4d0000);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        .container {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+        .card {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid #ff0000;
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+        .card-header {
+            background-color: #1a0000;
+            border-bottom: 1px solid #ff0000;
+            font-weight: bold;
+            color: #ff3333;
+            text-align: center;
+            font-size: 1.5rem;
+            padding: 1rem;
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .form-control {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid #ff0000;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+        .form-control:focus {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-color: #ff0000;
+            color: #ffffff;
+            box-shadow: 0 0 0 0.2rem rgba(139, 0, 0, 0.25);
+        }
+        .btn-primary {
+            background-color: #8b0000;
+            border-color: #8b0000;
+            width: 100%;
+            padding: 10px;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #6b0000;
+            border-color: #6b0000;
+            transform: translateY(-2px);
+        }
+        .alert-danger {
+            background-color: #8b0000;
+            border-color: #800000;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+        label {
+            color: #ff9999;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        hr {
+            border-color: #ff0000;
+            margin: 1.5rem 0;
+        }
+        a {
+            color: #ff6666;
+            font-weight: bold;
+        }
+        a:hover {
+            color: #ff3333;
+            text-decoration: none;
+        }
+        p {
+            text-align: center;
+            margin-top: 1rem;
+            color: #cccccc;
+        }
+        @media (max-width: 576px) {
+            .card {
+                margin: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    Registration
+                </div>
+                <div class="card-body">
+                    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+                    <form th:action="@{/register}" th:object="${user}" method="post">
+                        <div class="form-group">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" th:field="*{firstName}" id="firstName" class="form-control" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" th:field="*{lastName}" id="lastName" class="form-control" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" th:field="*{email}" id="email" class="form-control" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" th:field="*{password}" id="password" class="form-control" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height (cm):</label>
+                            <input type="number" th:field="*{height}" id="height" class="form-control" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight (kg):</label>
+                            <input type="number" th:field="*{weight}" id="weight" class="form-control" required/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                    <hr>
+                    <p>Already have an account? <a th:href="@{/login}">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

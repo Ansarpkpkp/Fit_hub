@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #000000, #1a0000, #330000, #4d0000);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        .container {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        .form-control {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid #ff0000;
+            color: #ffffff;
+        }
+        .form-control:focus {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-color: #ff0000;
+            color: #ffffff;
+            box-shadow: 0 0 0 0.2rem rgba(139, 0, 0, 0.25);
+        }
+        .btn-primary {
+            background-color: #8b0000;
+            border-color: #8b0000;
+        }
+        .btn-primary:hover {
+            background-color: #6b0000;
+            border-color: #6b0000;
+        }
+        .btn-secondary {
+            background-color: #333333;
+            border-color: #333333;
+        }
+        .btn-secondary:hover {
+            background-color: #1a1a1a;
+            border-color: #1a1a1a;
+        }
+        h2 {
+            color: #ff3333;
+        }
+        .alert-success {
+            background-color: #006400;
+            border-color: #005c00;
+            color: white;
+        }
+        .alert-danger {
+            background-color: #8b0000;
+            border-color: #800000;
+            color: white;
+        }
+        .text-danger {
+            color: #ff6666 !important;
+        }
+        .text-muted {
+            color: #aaaaaa !important;
+        }
+        label {
+            color: #ff9999;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h2>Edit Profile</h2>
+
+            <!-- Success message -->
+            <div th:if="${param.success}" class="alert alert-success">
+                Profile updated successfully!
+            </div>
+
+            <!-- Error message (if any) -->
+            <div th:if="${param.error}" class="alert alert-danger">
+                An error occurred. Please try again.
+            </div>
+
+            <form th:action="@{/user/profile/update}" th:object="${user}" method="post">
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" th:field="*{firstName}" id="firstName" class="form-control" required="required"/>
+                    <div th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" th:field="*{lastName}" id="lastName" class="form-control" required="required"/>
+                    <div th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" th:field="*{email}" id="email" class="form-control" required="required"/>
+                    <div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" id="newPassword" name="newPassword" class="form-control"/>
+                    <small class="form-text text-muted">Leave blank to keep the current password.</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+                <a th:href="@{/user/dashboard}" class="btn btn-secondary">Back to Dashboard</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
